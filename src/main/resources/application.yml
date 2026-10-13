@@ -1,3 +1,8 @@
 spring:
   application:
     name: ledgercore
+  datasource:
+    # jdbc:postgresql:// tells Spring which driver to use (the "driver class" it couldn't find before).
+    url: jdbc:postgresql://localhost:5433/ledgercore
+    username: ledgercore
+    password: ledgercore

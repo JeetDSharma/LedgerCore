@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: ledgercore-postgres
+    environment:
+      POSTGRES_DB: ledgercore
+      POSTGRES_USER: ledgercore
+      POSTGRES_PASSWORD: ledgercore   # local dev only; real secrets never go in git
+    ports:
+      # host:container. 5433 on the Mac, because a local Postgres already uses 5432.
+      - "5433:5432"
+    volumes:
+      # Named volume: data lives outside the container and survives `docker compose down`.
+      - ledgercore-pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ledgercore -d ledgercore"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  ledgercore-pgdata:
